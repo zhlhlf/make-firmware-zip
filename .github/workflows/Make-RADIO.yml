@@ -29,6 +29,7 @@ jobs:
       run: |
         git clone https://github.com/vm03/payload_dumper.git
         pip install protobuf
+        pip install bsdiff4
         cd payload_dumper
         python payload_dumper.py ../payload.bin
         ls
