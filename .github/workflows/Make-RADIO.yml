@@ -33,7 +33,7 @@ jobs:
         ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
         cd zhlhlf
-        zip RADIO-oplus9r.zip ./*
+        zip -q -r RADIO-oplus9r.zip *
                          
     - name: 上传到transfer
       if: env.transfer == 'true'      
