@@ -1,3 +1,4 @@
+pwd
 mv output/abl.img zhlhlf/firmware-update/abl.img
 mv output/aop.img zhlhlf/firmware-update/aop.img
 mv output/bluetooth.img zhlhlf/firmware-update/bluetooth.img
