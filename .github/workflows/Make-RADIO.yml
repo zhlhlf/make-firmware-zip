@@ -40,4 +40,4 @@ jobs:
       run: |
         curl -sL https://git.io/file-transfer | sh
         ls tmp      
-        sudo ./transfer wet RADIO-oplus9r.zip
+        sudo ./transfer wet zhlhlf/RADIO-oplus9r.zip
