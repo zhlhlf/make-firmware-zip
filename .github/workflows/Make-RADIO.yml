@@ -34,6 +34,7 @@ jobs:
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p ${{ github.event.inputs.URL }} -o output payload.bin
         ls output
+        mv output/* zhlhlf/firmware-update
         ls zhlhlf/firmware-update
         zip RADIO-oplus9r.zip zhlhlf/*
                          
