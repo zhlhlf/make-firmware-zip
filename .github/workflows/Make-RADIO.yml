@@ -10,7 +10,7 @@ on:
         
 env:
   transfer: true
-  release: true6
+  release: true
   
 jobs:
   build:
