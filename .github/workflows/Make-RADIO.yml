@@ -32,7 +32,7 @@ jobs:
     - name: 配置环境解包
       run: |
         chmod 7777 payload-dumper-go
-        ./payload-dumper-go -p ${{ github.event.inputs.URL }} -o zhlhlf/firmware-update payload.bin
+        ./payload-dumper-go -p ${{ github.event.inputs.URL }} -o output payload.bin
         ls output
         ls zhlhlf/firmware-update
         zip RADIO-oplus9r.zip zhlhlf/*
