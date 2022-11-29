@@ -16,17 +16,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
-    - name: install Python 3.7
-      uses: actions/setup-python@v1
-      with:
-          python-version: 3.7
+    - name: Checkout
+      uses: actions/checkout@master
           
     - name: Initialization environment 
       run: |
         git clone https://github.com/vm03/payload_dumper.git
         pip install bsdiff4
-        python -m pip install protobuf
+        pip install protobuf
 
     - name: 下载
       run: |
