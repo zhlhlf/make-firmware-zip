@@ -20,3 +20,4 @@ mv output/tz.img zhlhlf/firmware-update/tz.img
 mv output/uefisecapp.img zhlhlf/firmware-update/uefisecapp.img
 mv output/xbl.img zhlhlf/firmware-update/xbl.img
 mv output/xbl_config.img zhlhlf/firmware-update/xbl_config.img
+echo“移动完成”
