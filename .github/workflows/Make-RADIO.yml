@@ -35,7 +35,7 @@ jobs:
       run: |
         python payload_dumper/payload_dumper.py payload.bin
         mv payload_dumper/output ./output
-        ls 
+        ls output
         echo “djdjjdjdjdj”
         ls payload_dumper
         bash ./66.sh
