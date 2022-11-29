@@ -23,13 +23,17 @@ jobs:
     - name: 下载
       run: |
         aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
-        unzip ./tmp/*.zip ../
+        unzip ./tmp/*.zip -d ../
         
     - name: 配置解包环境
       run: |
         git clone https://github.com/vm03/payload_dumper.git
         pip install protobuf
-        
+        cd payload_dumper
+        python payload_dumper.py ../payload.bin
+        ls
+        echo "aaaaaaaaaa"
+        ls payload_dumper
                          
     - name: 上传到transfer
       if: env.transfer == 'true'      
@@ -37,12 +41,3 @@ jobs:
         curl -sL https://git.io/file-transfer | sh
         ls tmp      
         sudo ./transfer wet tmp/*
-
-    - name: 上传zhlhlf目录所有文件至 release
-      if: env.release == 'true'      
-      uses: ncipollo/release-action@v1.8.6
-      with:
-        artifacts: tmp/*
-        name: pack
-        tag: pack--Android-${{ github.run_number }}
-        token: ${{ secrets.GITHUB_TOKEN }}
