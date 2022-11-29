@@ -34,7 +34,7 @@ jobs:
     - name: 配置解包环境
       run: |
         python payload_dumper/payload_dumper.py payload.bin
-        ls
+        mv payload_dumper/output ./output
         bash 66.sh
         zip RADIO-oplus9r.zip zhlhlf/*
                          
