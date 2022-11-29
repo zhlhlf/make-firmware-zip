@@ -24,6 +24,9 @@ jobs:
       run: |
         aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
         unzip ./tmp/*.zip -d ../
+        ls
+       echo "aaaaaaaaaa"
+        ls tmp
         
     - name: 配置解包环境
       run: |
