@@ -33,8 +33,9 @@ jobs:
         
     - name: 配置解包环境
       run: |
-        python payload_dumper/payload_dumper.py payload.bin
+        python payload_dumper/payload_dumper.py payload.bin -abl-aop-bluetooth-cmnlib-cmnlib64-devcfg-dsp-featenabler-hyp-imagefv-keymaster-logo-mdm_oem_stanvbk-modem-multioem-qupfw-spunvm-storsec-tz-uefisecapp-xbl-xbl_config
         mv payload_dumper/output ./output
+        ls output
         mv output/abl.img zhlhlf/firmware-update/abl.img
         mv output/aop.img zhlhlf/firmware-update/aop.img
         mv output/bluetooth.img zhlhlf/firmware-update/bluetooth.img
@@ -58,7 +59,7 @@ jobs:
         mv output/xbl.img zhlhlf/firmware-update/xbl.img
         mv output/xbl_config.img zhlhlf/firmware-update/xbl_config.img
         ls zhlhlf/firmware-update
-        zip -rf RADIO-oplus9r.zip zhlhlf/*
+        zip -r RADIO-oplus9r.zip zhlhlf/*
                          
     - name: 上传到transfer
       if: env.transfer == 'true'      
