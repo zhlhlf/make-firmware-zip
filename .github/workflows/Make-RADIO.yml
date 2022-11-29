@@ -30,10 +30,10 @@ jobs:
       run: |
         mkdir output
         chmod 7777 payload-dumper-go
-        ./payload-dumper-go -p $hhhh -o zhlhlf/zhlhlf/firmware-update payload.bin
+        ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
-        ls zhlhlf/firmware-update
-        zip RADIO-oplus9r.zip zhlhlf/*
+        cd zhlhlf
+        zip RADIO-oplus9r.zip *
                          
     - name: 上传到transfer
       if: env.transfer == 'true'      
