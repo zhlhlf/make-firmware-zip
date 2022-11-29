@@ -35,7 +35,10 @@ jobs:
       run: |
         python payload_dumper/payload_dumper.py payload.bin
         mv payload_dumper/output ./output
-        bash 66.sh
+        ls 
+        echo “djdjjdjdjdj”
+        ls payload_dumper
+        bash ./66.sh
         zip RADIO-oplus9r.zip zhlhlf/*
                          
     - name: 上传到transfer
