@@ -30,8 +30,8 @@ jobs:
       run: |
         mkdir output
         chmod 7777 payload-dumper-go
-        ./payload-dumper-go -p $hhhh -o zhlhlf/ payload.bin
-        ls output
+        ./payload-dumper-go -p $hhhh -o zhlhlf/zhlhlf/firmware-update payload.bin
+        ls zhlhlf/firmware-update
         ls zhlhlf/firmware-update
         zip RADIO-oplus9r.zip zhlhlf/*
                          
