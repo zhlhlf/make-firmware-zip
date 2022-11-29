@@ -35,6 +35,7 @@ jobs:
       run: |
         cd payload_dumper
         python payload_dumper.py ../payload.bin
+        ls
         bash 66.sh
         zip RADIO-oplus9r.zip zhlhlf/*
                          
