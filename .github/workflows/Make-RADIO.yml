@@ -28,6 +28,7 @@ jobs:
         
     - name: 配置环境解包
       run: |
+        mkdir output
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p $hhhh -o zhlhlf/ payload.bin
         ls output
