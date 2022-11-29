@@ -35,9 +35,7 @@ jobs:
       run: |
         cd payload_dumper
         python payload_dumper.py ../payload.bin
-        ls
-        echo "aaaaaaaaaa"
-        ls payload_dumper
+        ls output
                          
     - name: 上传到transfer
       if: env.transfer == 'true'      
