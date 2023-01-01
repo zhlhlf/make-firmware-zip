@@ -11,7 +11,7 @@ on:
 env:
   transfer: true
   release: true
-  hhhh: "abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5"
+  hhhh: "recovery,abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5"
 
 jobs:
   build:
