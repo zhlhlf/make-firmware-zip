@@ -11,7 +11,8 @@ on:
 env:
   transfer: true
   release: true
-  hhhh: "abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5" #oneplus9r
+  hhhh: "boot"
+#"abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5" #oneplus9r
 #"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
 
 jobs:
