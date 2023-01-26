@@ -30,13 +30,11 @@ jobs:
       run: |
         unzip ./tmp/*.zip -d ./                   
       if: env.partition == 'payload'    
-      run: |
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
         fi
       if: env.partition == 'color'    
-      run: |
         unzip ./tmp/system_vendor.zip -d ./ 
         cp -r firmware-update zhlhlf/                    
         fi
