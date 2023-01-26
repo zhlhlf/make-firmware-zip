@@ -25,16 +25,16 @@ jobs:
     - name: 下载
       run: |
         aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
-        unzip ./tmp/*.zip -d ./             
         
-    - name: 配置环境解包
+    - name: 解包~提取
       run: |
-        if [ env.partition = payload ]; then
+        unzip ./tmp/*.zip -d ./                   
+        if [ env.partition == payload ]; then
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
         fi
-        if [ env.partition = color ]; then
+        if [ env.partition == color ]; then
         unzip ./tmp/system_vendor.zip -d ./ 
         cp -r firmware-update zhlhlf/                    
         fi
