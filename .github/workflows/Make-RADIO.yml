@@ -40,7 +40,6 @@ jobs:
         zz=$(ls tmp/*.zip)
         unzip -v $zz
         unzip $zz system_vendor.zip -d ./
-        unzip -v system_vendor.zip
         unzip system_vendor.zip firmware-update -d ./                         
         cp -r firmware-update zhlhlf/                            
                          
