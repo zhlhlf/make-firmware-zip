@@ -10,7 +10,7 @@ on:
         
 env:
   transfer: true
-  release: true
+  partition: payload #color
   hhhh: "boot,dtbo"
 #"abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5" #oneplus9r
 #"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
@@ -25,19 +25,25 @@ jobs:
     - name: 下载
       run: |
         aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
-        unzip ./tmp/*.zip -d ./
-        ls
+        unzip ./tmp/*.zip -d ./             
         
     - name: 配置环境解包
       run: |
-        mkdir output
+        if [ env.partition = payload ]; then
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
+        fi
+        if [ env.partition = color ]; then
+        unzip ./tmp/system_vendor.zip -d ./ 
+        cp -r firmware-update zhlhlf/                    
+        fi
+        ls zhlhlf
         cd zhlhlf
         zip -q -r RADIO-oplus9r.zip *
+        
                          
-    - name: 上传到transfer
+    - name: 上传到wetransfer
       if: env.transfer == 'true'      
       run: |
         curl -sL https://git.io/file-transfer | sh     
