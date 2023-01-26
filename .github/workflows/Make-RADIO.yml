@@ -39,7 +39,8 @@ jobs:
       run: |
         zz=$(ls tmp/*.zip)
         unzip -v $zz
-        unzip $zz firmware-update -d ./                         
+        unzip $zz system_vendor.zip -d ./
+        unzip system_vendor.zip firmware-update -d ./                         
         cp -r firmware-update zhlhlf/                            
                          
     - name: 打包上传到wetransfer
