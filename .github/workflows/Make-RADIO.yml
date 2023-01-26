@@ -37,8 +37,9 @@ jobs:
     - name: 解包~提取(color)
       if: env.partition == 'color'    
       run: |
-        unzip -v *
-        unzip ./tmp/*.zip system_vendor.zip -d ./                         
+        zz=$(ls tmp)
+        unzip -v $zz
+        unzip ./tmp/$zz system_vendor.zip -d ./                         
         unzip system_vendor.zip -d ./ 
         cp -r firmware-update zhlhlf/                            
                          
