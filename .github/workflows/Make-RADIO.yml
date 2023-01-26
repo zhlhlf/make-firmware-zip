@@ -26,26 +26,27 @@ jobs:
       run: |
         aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
         
-    - name: 解包~提取
+    - name: 解包~提取(payload)
+      if: env.partition == 'payload'    
       run: |
         unzip ./tmp/*.zip -d ./                   
-      if: env.partition == 'payload'    
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
-        fi
+
+    - name: 解包~提取(color)
       if: env.partition == 'color'    
+      run: |
+        unzip ./tmp/*.zip -d ./                         
         unzip ./tmp/system_vendor.zip -d ./ 
-        cp -r firmware-update zhlhlf/                    
-        fi
-        ls zhlhlf
-        cd zhlhlf
-        zip -q -r RADIO-oplus9r.zip *
-        
+        cp -r firmware-update zhlhlf/                            
                          
-    - name: 上传到wetransfer
+    - name: 打包上传到wetransfer
       if: env.transfer == 'true'      
       run: |
+        ls zhlhlf
+        cd zhlhlf
+        zip -q -r RADIO-oplus9r.zip *      
         curl -sL https://git.io/file-transfer | sh     
         sudo ./transfer wet zhlhlf/RADIO-oplus9r.zip
         
