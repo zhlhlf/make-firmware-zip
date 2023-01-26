@@ -37,8 +37,8 @@ jobs:
     - name: 解包~提取(color)
       if: env.partition == 'color'    
       run: |
-        unzip ./tmp/*.zip -d ./                         
-        unzip ./tmp/system_vendor.zip -d ./ 
+        unzip ./tmp/*.zip system_vendor.zip -d ./                         
+        unzip system_vendor.zip -d ./ 
         cp -r firmware-update zhlhlf/                            
                          
     - name: 打包上传到wetransfer
