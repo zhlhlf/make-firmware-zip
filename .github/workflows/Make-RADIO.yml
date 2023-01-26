@@ -37,7 +37,7 @@ jobs:
     - name: 解包~提取(color)
       if: env.partition == 'color'    
       run: |
-        zz=$(ls tmp)
+        zz=$(ls tmp/*.zip)
         unzip -v $zz
         unzip ./tmp/$zz system_vendor.zip -d ./                         
         unzip system_vendor.zip -d ./ 
