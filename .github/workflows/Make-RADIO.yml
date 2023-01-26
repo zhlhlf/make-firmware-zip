@@ -38,7 +38,7 @@ jobs:
       if: env.partition == 'color'    
       run: |
         zz=$(ls tmp/*.zip)
-        umzip -v $zz
+        unzip -v $zz
         echo -e "\n"
         unzip $zz firmware-update -d ./ || echo "压缩包根目录没有firmware-update"
         unzip $zz system_vendor.zip -d ./ || echo "压缩包根目录没有system_vendor.zip"
