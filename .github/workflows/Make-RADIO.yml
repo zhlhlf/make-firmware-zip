@@ -40,7 +40,7 @@ jobs:
         zz=$(ls tmp/*.zip)
         unzip -v $zz
         echo -e "\n"
-        unzip $zz firmware-update -d ./ || echo "压缩包根目录没有firmware-update"
+        unzip $zz firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
         unzip $zz system_vendor.zip -d ./ || echo "压缩包根目录没有system_vendor.zip"
         unzip system_vendor.zip firmware-update/* -d ./ || echo "666" 
         cp -r firmware-update zhlhlf/                            
