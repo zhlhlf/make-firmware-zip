@@ -51,6 +51,6 @@ jobs:
         cd zhlhlf
         zip -q -r RADIO-oplus9r.zip *      
         curl -sL https://git.io/file-transfer | sh     
-        sudo ./transfer wet RADIO-oplus9r.zip
+        sudo ./transfer wss RADIO-oplus9r.zip
         
         
