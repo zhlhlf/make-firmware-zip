@@ -52,7 +52,7 @@ jobs:
         zip -q -r RADIO-oplus9r.zip *      
         #curl -sL https://git.io/file-transfer | sh     
         #sudo ./transfer wss RADIO-oplus9r.zip
-        rm -r 666
+        rm -r 666 || echo "  "
         mkdir 666
         mv RADIO-oplus9r.zip 666
         curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
