@@ -38,8 +38,8 @@ jobs:
       if: env.partition == 'color'    
       run: |
         zz=$(ls tmp/*.zip)
-        unzip -v $zz
-        echo -e "\n"
+        unzip -v "$zz"
+        echo -e "$zz\n\n"
         unzip "$zz" firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
         unzip "$zz" system_vendor* -d ./ || echo "压缩包根目录没有system_vendor.zip"
         unzip system_vendor* firmware-update/* -d ./ || echo "666" 
