@@ -56,6 +56,8 @@ jobs:
         rm -r 666 || echo "  "
         mkdir 666
         mv RADIO-oplus9r.zip 666
-        curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
+        wget -q https://raw.githubusercontent.com/zhlhlf/text/main/upload-wetransfer.py
+        for i in $(ls 666/) ; do python upload-wetransfer.py -u "666/$i" ; done
+        #curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
         
         
