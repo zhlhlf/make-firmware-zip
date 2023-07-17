@@ -8,11 +8,23 @@ on:
         required: true
         default: ''
         
-env:
-  transfer: true
-  partition: payload #payload #color
-  hhhh: "abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5" #oneplus9r
-#"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
+        
+      payload:
+        description: 'is payload？'
+        required: true
+        default: 'true'
+        type: boolean
+
+      images:
+        description: 'img'
+        required: true
+        default: 'abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5'
+        
+        #"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
+        
+
+
+
 
 jobs:
   build:
@@ -23,18 +35,18 @@ jobs:
           
     - name: 下载
       run: |
-        aria2c -x16 -j5 -s16 -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
+        aria2c -x16 -j5 -s16 -U "netdisk" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
         
     - name: 解包~提取(payload)
-      if: env.partition == 'payload'    
+      if: github.event.inputs.payload == 'true'    
       run: |
         unzip ./tmp/*.zip -d ./                   
         chmod 7777 payload-dumper-go
-        ./payload-dumper-go -p $hhhh -o zhlhlf/firmware-update payload.bin
+        ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
 
     - name: 解包~提取(color)
-      if: env.partition == 'color'    
+      if: github.event.inputs.payload == 'false'
       run: |
         zz=$(ls tmp/*.zip)
         unzip -v "$zz"
@@ -45,17 +57,14 @@ jobs:
         cp -r firmware-update zhlhlf/                            
                          
     - name: 打包上传到wetransfer
-      if: env.transfer == 'true'      
       run: |
         ls zhlhlf
         cd zhlhlf
-        zip -q -r RADIO-oplus9r.zip *      
-        #curl -sL https://git.io/file-transfer | sh     
-        #sudo ./transfer wss RADIO-oplus9r.zip
+        zip -q -r fw-oplus9r.zip *      
         rm -r 666 || echo "  "
         mkdir 666
-        mv RADIO-oplus9r.zip 666
-        wget -q https://raw.githubusercontent.com/zhlhlf/text/main/upload-wetransfer.py
+        mv fw-oplus9r.zip 666
+        wget -q https://raw.github.com/zhlhlf/text/main/upload-wetransfer.py
         for i in $(ls 666/) ; do python upload-wetransfer.py -u "666/$i" ; done
         #curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
         
