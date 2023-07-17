@@ -31,12 +31,13 @@ jobs:
           
     - name: 下载
       run: |
-        aria2c -x10-U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
+        aria2c -x10 -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
         
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
       run: |
         ls
+        sudo bash ssh.sh
         unzip *.zip                 
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
