@@ -8,7 +8,6 @@ on:
         required: true
         default: ''
         
-        
       payload:
         description: 'is payload？'
         required: true
@@ -22,10 +21,7 @@ on:
         
         #"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
         
-
-
-
-
+        
 jobs:
   build:
     runs-on: ubuntu-latest
