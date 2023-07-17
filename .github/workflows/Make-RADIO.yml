@@ -37,7 +37,7 @@ jobs:
       if: github.event.inputs.payload == 'true'    
       run: |
         ls
-        unzip aaaa.zip                 
+        unzip *.zip                 
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
