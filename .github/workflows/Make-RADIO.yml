@@ -35,12 +35,12 @@ jobs:
           
     - name: 下载
       run: |
-        aria2c -x16 -j5 -s16 -U "netdisk" -d tmp "${{ github.event.inputs.URL }}" -o "${{ github.event.inputs.name }}" || wget -U "netdisk;11.36.0;iPhone14ProMax;ios-iphone;16.0;zh_CN" "${{ github.event.inputs.URL }}" -d tmp/
+        aria2c -x16 -j5 -s16 -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
         
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
       run: |
-        unzip ./tmp/*.zip -d ./                   
+        unzip aaaa.zip -d ./                   
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
@@ -64,7 +64,7 @@ jobs:
         rm -r 666 || echo "  "
         mkdir 666
         mv fw-oplus9r.zip 666
-        wget -q https://raw.github.com/zhlhlf/text/main/upload-wetransfer.py
+        wget -q http://raw.github.com/zhlhlf/text/main/upload-wetransfer.py
         for i in $(ls 666/) ; do python upload-wetransfer.py -u "666/$i" ; done
         #curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
         
