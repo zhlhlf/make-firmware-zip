@@ -55,12 +55,10 @@ jobs:
       run: |
         ls zhlhlf
         cd zhlhlf
-        zip -q -r fw-oplus9r.zip *      
-        rm -r 666 || echo "  "
+        zip -r fw-oplus9r-$(date +%Y-%m-%d-%H).zip *     
+        rm -r 666 || echo 
         mkdir 666
-        mv fw-oplus9r.zip 666
-        wget -q http://raw.github.com/zhlhlf/text/main/upload-wetransfer.py
-        for i in $(ls 666/) ; do python upload-wetransfer.py -u "666/$i" ; done
-        #curl -SL http://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | sh
-        
+        mv fw-oplus9r-*.zip 666
+        wget -q https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh && sh onedrive_mount.sh ${{ secrets.RCK }} 临时存放文件         
+    
         
