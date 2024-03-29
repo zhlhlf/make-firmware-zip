@@ -7,6 +7,10 @@ on:
         description: 'URL'
         required: true
         default: ''
+      zip_name:
+        description: 'zip_name'
+        required: true
+        default: 'fw-oplus9r-oos14-H17-final_scripts.zip'
         
       payload:
         description: 'is payload？'
@@ -37,7 +41,8 @@ jobs:
       if: github.event.inputs.payload == 'true'    
       run: |
         ls
-        unzip aaaa.zip                 
+        unzip aaaa.zip 
+        wget https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 7777 payload-dumper-go
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
@@ -55,10 +60,10 @@ jobs:
       run: |
         ls zhlhlf
         cd zhlhlf
-        zip -r fw-oplus9r-$(date +%Y-%m-%d-%H).zip *     
+        zip -r "${{ github.event.inputs.zip_name }}" *     
         rm -r 666 || echo 
         mkdir 666
-        mv fw-oplus9r-*.zip 666
-        wget -q https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh && sh onedrive_mount.sh ${{ secrets.RCK }} 临时存放文件         
+        mv "${{ github.event.inputs.zip_name }}" 666
+        curl -sL https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | bash -s ${{ secrets.RCK }} 临时存放文件         
     
         
