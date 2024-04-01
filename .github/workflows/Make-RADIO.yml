@@ -44,6 +44,7 @@ jobs:
         unzip aaaa.zip 
         wget https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 7777 payload-dumper-go
+        mkdir firmware-update
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
 
@@ -60,6 +61,8 @@ jobs:
       run: |
         ls zhlhlf
         cd zhlhlf
+        echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by zhlhlf.txt"
+        echo "${{ github.event.inputs.URL }}" >> "firmware-update/by zhlhlf.txt"
         zip -r "${{ github.event.inputs.zip_name }}" *     
         rm -r 666 || echo 
         mkdir 666
