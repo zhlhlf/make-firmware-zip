@@ -36,6 +36,7 @@ jobs:
     - name: 下载
       run: |
         aria2c -x10 -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
+        mkdir firmware-update
         
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
@@ -44,7 +45,6 @@ jobs:
         unzip aaaa.zip 
         wget https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 7777 payload-dumper-go
-        mkdir firmware-update
         ./payload-dumper-go -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
         ls zhlhlf/firmware-update
 
