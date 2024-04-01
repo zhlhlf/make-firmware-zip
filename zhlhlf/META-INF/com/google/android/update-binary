@@ -3,6 +3,12 @@
 OUTFD=/proc/self/fd/$2
 ZIPFILE="$(pwd)/$3"
 
+tmp=/data/tmp
+rm -rf $tmp
+mkdir -p $tmp
+cd $tmp
+
+
 ui_print() {
   echo -e "ui_print $1\nui_print" >>$OUTFD
 }
@@ -50,61 +56,52 @@ else
     fi
 fi
 
+ui_print " "
+ui_print " "
+ui_print "you device type is: $hh"
 
-    ui_print "flash _a or b?    + is a   ||  - is b"
-    _ab=$(keyListener)
-    if [ $_ab = 1 ];then
-      _ab=a
-    elif [ $_ab = 0 ];then
-      _ab=b
-    fi
+ui_print "firmware-update -> _a or _b?    + is a   ||  - is b"
+_ab=$(keyListener)
+if [ $_ab = 1 ];then
+  _ab=a
+elif [ $_ab = 0 ];then
+  _ab=b
+fi
+    
+#把获取的ddr_type写入文件   用于里层刷机脚本获取
+echo "ddr=$hh" > type_zhlhlf
+
+#把获取的a或者b写入文件   用于里层刷机脚本获取
+echo "ab=_$_ab" >> type_zhlhlf
+
 
 package_extract_file(){
     dd if=$1 of=$2 bs=4K
 }
 
-tmp=/data/tmp
-rm -rf $tmp
-mkdir -p $tmp
-cd $tmp
-
-unzip -o "$ZIPFILE" META-INF/com/google/android/*
-cp -r META-INF/com/google/android/updater-script1 META-INF/com/google/android/updater-script
-unzip -o "$ZIPFILE" zip
+unzip -o "$ZIPFILE" META-INF/com/google/android/update-binary1
 mv META-INF/com/google/android/update-binary1 ./
 chmod 777 * -R      
 
-if [ $hh = "ddr4" ];then
-  ui_print "-----ddr4-----"
-elif [ $hh = "ddr5" ];then
-  ui_print "-----ddr5-----"
-  sed -i s/'xbl.img'/'xbl_lp5.img'/g META-INF/com/google/android/updater-script
-  sed -i s/'xbl_config.img'/'xbl_config_lp5.img'/g META-INF/com/google/android/updater-script
-fi
-
-
-#脚本里面默认是刷_a
-if [ $_ab = "b" ];then
-    sed -i s/'_a'/'_b'/g META-INF/com/google/android/updater-script
-fi
-
-./zip -u "$ZIPFILE" META-INF/com/google/android/updater-script
 ./update-binary1 $1 $2 $ZIPFILE
 
 if [ "$(unzip -v "$ZIPFILE" | grep "images/")" ];then
     ui_print "-----------flash rom-----------"
-    unzip -o "$ZIPFILE" images/*
-    unzip -o "$ZIPFILE" lpmake
-    unzip -o "$ZIPFILE" pack_super.sh
-    chmod 777 * -R
-    mv images project
-    ui_print "flash a or b?    + is a   ||  - is b"
+    ui_print "flash rom  -> a or b?    + is a   ||  - is b"
     hh=$(keyListener)
+    
     if [ $hh = 1 ];then
       ab=0
     elif [ $hh = 0 ];then
       ab=1
     fi
+    
+    unzip -o "$ZIPFILE" images/*
+    unzip -o "$ZIPFILE" lpmake
+    unzip -o "$ZIPFILE" pack_super.sh
+    chmod 777 * -R
+    mv images project
+
     
     list="boot dtbo vbmeta vbmeta_system"
     if [ -f project/my_stock.img ];then
@@ -145,3 +142,4 @@ ui_print "-----------------------------------------"
 ui_print " Perfect Script Final Edition 2024-3-29"
 ui_print "                              --by zhlhlf"
 rm -rf $tmp
+
