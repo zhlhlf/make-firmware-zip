@@ -8,7 +8,6 @@ rm -rf $tmp
 mkdir -p $tmp
 cd $tmp
 
-
 ui_print() {
   echo -e "ui_print $1\nui_print" >>$OUTFD
 }
@@ -79,11 +78,19 @@ package_extract_file(){
     dd if=$1 of=$2 bs=4K
 }
 
-unzip -o "$ZIPFILE" META-INF/com/google/android/update-binary1
+unzip -o "$ZIPFILE" META-INF/com/google/android/*
 mv META-INF/com/google/android/update-binary1 ./
+mv META-INF/com/google/android/libandroid-support.so ./
+mv META-INF/com/google/android/zip ./
 chmod 777 * -R      
+export PATH=$(pwd):$PATH
 
-./update-binary1 $1 $2 $ZIPFILE
+ui_print "extract firmware-update...."
+unzip -o "$ZIPFILE" firmware-update/*
+zip -r zhlhlf_fw.zip firmware-update/*
+zip -u zhlhlf_fw.zip META-INF/com/google/android/updater-script
+update-binary1 $1 $2 /data/tmp/zhlhlf_fw.zip
+
 
 if [ "$(unzip -v "$ZIPFILE" | grep "images/")" ];then
     ui_print "-----------flash rom-----------"
@@ -95,8 +102,9 @@ if [ "$(unzip -v "$ZIPFILE" | grep "images/")" ];then
     elif [ $hh = 0 ];then
       ab=1
     fi
-    
-    unzip -o "$ZIPFILE" images/*
+    ui_print "extract images...."
+
+    unzip -o "$ZIPFILE" images/*    
     unzip -o "$ZIPFILE" lpmake
     unzip -o "$ZIPFILE" pack_super.sh
     chmod 777 * -R
@@ -139,7 +147,7 @@ if [ "$(unzip -v "$ZIPFILE" | grep "images/")" ];then
         
 fi
 ui_print "-----------------------------------------"
-ui_print " Perfect Script Final Edition 2024-3-29"
+ui_print " Perfect Script Final Edition 2024-4-1"
 ui_print "                              --by zhlhlf"
 rm -rf $tmp
 
