@@ -59,6 +59,7 @@ jobs:
                          
     - name: 打包上传到wetransfer
       run: |
+        echo ${{ github.event.inputs.images }}
         ls zhlhlf
         cd zhlhlf
         echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by zhlhlf.txt"
