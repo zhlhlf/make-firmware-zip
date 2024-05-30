@@ -10,7 +10,7 @@ on:
       zip_name:
         description: 'zip_name'
         required: true
-        default: 'fw-oplus9r-oos14-H17-final_scripts.zip'
+        default: 'fw-oplus9r-oos1-final.zip'
         
       payload:
         description: 'is payload？'
