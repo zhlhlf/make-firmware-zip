@@ -9,7 +9,7 @@ on:
         default: ''
         
       twrp_URL:
-        description: 'URL'
+        description: 'twrp_URL'
         required: false
         default: ''
         
