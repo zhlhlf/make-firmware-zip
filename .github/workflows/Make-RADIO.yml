@@ -55,8 +55,9 @@ jobs:
         ./payload-dumper-go -c 1 -p "${{ github.event.inputs.images }}" -o firmware-update payload.bin
         git clone https://github.com/zhlhlf/android_flash_scripts -b 9r_ab_sh_v1 zhlhlf --depth=1
         mv firmware-update zhlhlf/
+        cd zhlhlf
         rm -rf README.md .git
-        if [ "${{ github.event.inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ github.event.inputs.twrp_URL }}" -o twrp.img ; mv twrp.img zhlhlf/ ; fi 
+        if [ "${{ github.event.inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ github.event.inputs.twrp_URL }}" -o twrp.img ; fi 
 
     - name: 解包~提取(color)
       if: github.event.inputs.payload == 'false'
