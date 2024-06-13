@@ -53,8 +53,10 @@ jobs:
         rm -rf aaaa.zip 
         wget https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 7777 payload-dumper-go
-        ./payload-dumper-go -c 1 -p "${{ github.event.inputs.images }}" -o zhlhlf/firmware-update payload.bin
-        ls zhlhlf/firmware-update
+        ./payload-dumper-go -c 1 -p "${{ github.event.inputs.images }}" -o firmware-update payload.bin
+        git clone https://github.com/zhlhlf/android_flash_scripts -b 9r_ab_sh_v1 zhlhlf --depth=1
+        mv firmware-update zhlhlf/
+        rm -rf README.md .git
 
     - name: 解包~提取(color)
       if: github.event.inputs.payload == 'false'
@@ -63,6 +65,7 @@ jobs:
         unzip "aaaa.zip" firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
         unzip "aaaa.zip" system_vendor* -d ./ || echo "压缩包根目录没有system_vendor.zip"
         unzip system_vendor* firmware-update/* -d ./ || echo "666" 
+        mkdir zhlhlf
         cp -r firmware-update zhlhlf/                            
                          
     - name: 打包上传到wetransfer
