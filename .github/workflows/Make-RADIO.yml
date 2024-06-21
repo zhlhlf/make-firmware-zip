@@ -52,7 +52,7 @@ jobs:
         rm -rf aaaa.zip 
         wget https://github.com/zhlhlf/text/raw/main/payload_dumper
         chmod 777 payload_dumper
-        ./payload_dumper --images "${{ github.event.inputs.images }}" --out firmware-update payload.bin >> /dev/null 2>&1
+        ./payload_dumper --images "${{ github.event.inputs.images }}" --out firmware-update payload.bin #>> /dev/null 2>&1
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
@@ -72,7 +72,7 @@ jobs:
     - name: 打包上传到wetransfer
       run: |
         echo ${{ github.event.inputs.images }}
-        ls zhlhlf/firmware-update
+        du -h zhlhlf/firmware-update/*
         cd zhlhlf
         echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by zhlhlf.txt"
         echo "${{ github.event.inputs.URL }}" >> "firmware-update/by zhlhlf.txt"
