@@ -27,10 +27,9 @@ on:
       images:
         description: 'img'
         required: true
-        default: 'abl,aop,bluetooth,cmnlib,cmnlib64,devcfg,dsp,featenabler,hyp,imagefv,keymaster,logo,mdm_oem_stanvbk,modem,multioem,multiimgoem,qupfw,spunvm,storsec,tz,uefisecapp,xbl,xbl_config,xbl_lp5,xbl_config_lp5'
+        default: 'abl aop bluetooth cmnlib cmnlib64 devcfg dsp featenabler hyp imagefv keymaster logo mdm_oem_stanvbk modem multioem multiimgoem qupfw spunvm storsec tz uefisecapp xbl xbl_config xbl_lp5 xbl_config_lp5'
         
-        #"apusys,audio_dsp,ccu,dpm,dtbo,gpueb,gz,lk,logo,mcf_ota,mcupm,md1img,mvpu_algo,pi_img,preloader_raw,scp,spmfw,sspm,tee,vbmeta,vcp"#redmi-k50
-        
+        #"apusys audio_dsp ccu dpm dtbo gpueb gz lk logo mcf_ota mcupm md1img mvpu_algo pi_img preloader_raw scp spmfw sspm tee vbmeta vcp"#redmi-k50
         
 jobs:
   build:
@@ -52,7 +51,7 @@ jobs:
         rm -rf aaaa.zip 
         wget https://github.com/zhlhlf/text/raw/main/payload_dumper
         chmod 777 payload_dumper
-        ./payload_dumper --images "${{ github.event.inputs.images }}" --out firmware-update payload.bin #>> /dev/null 2>&1
+        for i in ${{ github.event.inputs.images }};do ./payload_dumper --images $i --out firmware-update payload.bin || exit 1 ; done 
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
