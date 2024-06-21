@@ -83,8 +83,8 @@ jobs:
         echo ${{ github.event.inputs.images }}
         du -h zhlhlf/firmware-update/*
         cd zhlhlf
-        echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by zhlhlf.txt"
-        echo "${{ github.event.inputs.URL }}" >> "firmware-update/by zhlhlf.txt"
+        echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by-zhlhlf.txt"
+        echo "${{ github.event.inputs.URL }}" >> "firmware-update/by-zhlhlf.txt"
         zip -r "${{ github.event.inputs.zip_name }}" *     
         rm -r 666 || echo 
         mkdir 666
