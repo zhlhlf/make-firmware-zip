@@ -50,9 +50,9 @@ jobs:
         ls
         unzip aaaa.zip payload.bin
         rm -rf aaaa.zip 
-        wget https://github.com/zhlhlf/text/raw/main/payload-dumper-go
-        chmod 7777 payload-dumper-go
-        ./payload-dumper-go -c 1 -p "${{ github.event.inputs.images }}" -o firmware-update payload.bin >> /dev/null 2>&1
+        wget https://github.com/zhlhlf/text/raw/main/payload-dumper
+        chmod 777 payload-dumper-go
+        ./payload-dumper --images "${{ github.event.inputs.images }}" --out firmware-update payload.bin >> /dev/null 2>&1
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
