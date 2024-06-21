@@ -52,7 +52,8 @@ jobs:
         wget https://github.com/zhlhlf/text/raw/main/payload_dumper
         chmod 777 payload_dumper
         hh=""
-        for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload_dumper --images $i --out firmware-update payload.bin || hh+="$i " ; done 
+        for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload_dumper --images $i --out firmware-update payload.bin >/dev/null 2>&1 || hh+="$i " ; done 
+        echo
         echo "提取失败的有: $hh"
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
         mv firmware-update zhlhlf/
