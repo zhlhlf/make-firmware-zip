@@ -53,13 +53,13 @@ jobs:
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 777 *
         hh=""
-        for i in $hh;do echo "extract $i..." ;./payload-dumper-go -p $i -o firmware-update payload.bin >/dev/null 2>&1 || hh+="$i " ; done 
+        for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload-dumper-go -p $i -o firmware-update payload.bin >/dev/null 2>&1 || hh+="$i " ; done 
         echo
         echo "第一轮提取失败的有: $hh"
 
         hh1=""
         echo
-        for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload_dumper --images $i --out firmware-update payload.bin >/dev/null 2>&1 || hh1+="$i " ; done 
+        for i in $hh;do echo "extract $i..." ;./payload_dumper --images $i --out firmware-update payload.bin >/dev/null 2>&1 || hh1+="$i " ; done 
         echo "第二还轮提取失败的有: $hh1"
         
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
