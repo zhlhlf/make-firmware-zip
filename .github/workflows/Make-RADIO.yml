@@ -52,7 +52,7 @@ jobs:
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 777 *
-        payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
+        ./payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
         # hh=""
         # for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload-dumper-go -p $i -o firmware-update payload.bin >/dev/null 2>&1 || hh+="$i " ; done 
         # echo
