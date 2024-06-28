@@ -81,6 +81,7 @@ jobs:
                          
     - name: 打包上传到wetransfer
       run: |
+        sha256sum zhlhlf/firmware-update/*
         du -h zhlhlf/firmware-update/*
         cd zhlhlf
         echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by-zhlhlf.txt"
