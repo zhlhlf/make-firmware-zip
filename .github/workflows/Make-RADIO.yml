@@ -46,13 +46,13 @@ jobs:
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
       run: |
-        ls
-        unzip aaaa.zip payload.bin
+        unzip -q aaaa.zip payload.bin
         rm -rf aaaa.zip 
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dumper-go
         chmod 777 *
         ./payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
+        
         # hh=""
         # for i in ${{ github.event.inputs.images }};do echo "extract $i..." ;./payload-dumper-go -p $i -o firmware-update payload.bin >/dev/null 2>&1 || hh+="$i " ; done 
         # echo
@@ -77,7 +77,7 @@ jobs:
         unzip "aaaa.zip" system_vendor* -d ./ || echo "压缩包根目录没有system_vendor.zip"
         unzip system_vendor* firmware-update/* -d ./ || echo "666" 
         mkdir zhlhlf
-        cp -r firmware-update zhlhlf/                            
+        cp -r firmware-update zhlhlf/       
                          
     - name: 打包上传到wetransfer
       run: |
