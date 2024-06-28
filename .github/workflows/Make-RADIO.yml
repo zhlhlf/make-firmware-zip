@@ -81,13 +81,14 @@ jobs:
                          
     - name: 打包上传到wetransfer
       run: |
-        sha256sum zhlhlf/firmware-update/*
-        du -h zhlhlf/firmware-update/*
         cd zhlhlf
-        echo "$(date +%Y-%m-%d-%H)" > "firmware-update/by-zhlhlf.txt"
+        sha256sum firmware-update/*
+        sha256sum firmware-update/* > firmware-update/by-zhlhlf.txt
+        du -h firmware-update/*
+        echo "$(date +%Y-%m-%d-%H)" >> "firmware-update/by-zhlhlf.txt"
         echo "${{ github.event.inputs.URL }}" >> "firmware-update/by-zhlhlf.txt"
         zip -qr "${{ github.event.inputs.zip_name }}" *     
-        rm -r 666 || echo 
+        rm -rf 666
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
         curl -sL https://raw.github.com/zhlhlf/text/main/onedrive_mount.sh | bash -s ${{ secrets.RCK }} 临时存放文件         
