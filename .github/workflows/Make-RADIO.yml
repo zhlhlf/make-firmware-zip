@@ -91,6 +91,4 @@ jobs:
         rm -rf 666
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
-        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s ${{ secrets.RCK }} tyy2/临时存放文件
-    
-        
+        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s ${{ secrets.RCK }} 
