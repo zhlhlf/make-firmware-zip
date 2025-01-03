@@ -59,7 +59,7 @@ jobs:
         mv firmware-update zhlhlf/
         cd zhlhlf
         rm -rf README.md .git
-        if [ "${{ github.event.inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ github.event.inputs.twrp_URL }}" -o twrp.img ; fi 
+        if [ "${{ github.event.inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ github.event.inputs.twrp_URL }}" -o recovery.img -d firmware-update ; fi 
 
     - name: 解包~提取(color)
       if: github.event.inputs.payload == 'false'
