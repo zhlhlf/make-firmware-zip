@@ -55,7 +55,7 @@ jobs:
         ./payload-dump payload.bin
         ./payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
         
-        git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
+        git clone https://github.com/zhlhlf/android_flash_scripts -b main zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
         rm -rf README.md .git
