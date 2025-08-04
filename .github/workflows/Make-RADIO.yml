@@ -50,8 +50,9 @@ jobs:
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
       run: |
+        mkdir firmware-update
         unzip -q aaaa.zip payload.bin
-        unzip -q aaaa.zip payload_properties.txt -d firmware-update
+        unzip -q aaaa.zip payload_properties.txt
         rm -rf aaaa.zip 
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         chmod 777 *
@@ -78,6 +79,7 @@ jobs:
       run: |
         cd zhlhlf
         cat payload_properties.txt | tee > firmware-update/by-zhlhlf.txt
+        echo "\n\n" >> firmware-update/by-zhlhlf.txt
         sha256sum firmware-update/* | tee >> firmware-update/by-zhlhlf.txt
         du -h firmware-update/*
         echo "$(date +%Y-%m-%d-%H)" >> "firmware-update/by-zhlhlf.txt"
@@ -87,6 +89,7 @@ jobs:
         mkdir 666
         mv "${{ inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
+
 
 
 
