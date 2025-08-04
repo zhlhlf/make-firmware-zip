@@ -39,6 +39,7 @@ jobs:
       uses: actions/checkout@master
           
     - name: 下载
+      if: github.event.inputs.payload == 'false'
       run: |
         aria2c -x10 -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
         mkdir firmware-update
@@ -48,12 +49,10 @@ jobs:
       run: |
         unzip -q aaaa.zip payload.bin
         rm -rf aaaa.zip 
-        wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
-        wget -q https://github.com/zhlhlf/text/raw/main/payload-dumper-go
+        pip install git+https://github.com/5ec1cff/payload-dumper
         chmod 777 *
-        echo "images: "
-        ./payload-dump payload.bin
-        ./payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
+        echo "images: $${{ github.event.inputs.images }}"
+        payload_dumper --out firmware-update --partitions "${{ github.event.inputs.images }}" "${{ github.event.inputs.URL }}" 
         
         git clone https://github.com/zhlhlf/android_flash_scripts -b main zhlhlf --depth=1
         mv firmware-update zhlhlf/
@@ -84,3 +83,4 @@ jobs:
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s ${{ secrets.RCK }} 
+
