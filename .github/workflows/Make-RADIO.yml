@@ -30,9 +30,9 @@ on:
         default: 'abl aop aop_config bluetooth cpucp cpucp_dtb devcfg dsp engineering_cdt featenabler hyp imagefv keymaster modem oplus_sec oplusstanvbk qupfw recovery shrm splash tz uefi uefisecapp xbl xbl_config xbl_ramdump'
 
       upload_dir:
-        description: 'gg'
+        description: 'upload_dir'
         required: true
-        default: ''
+        default: 'gg'
         
         #"apusys audio_dsp ccu dpm dtbo gpueb gz lk logo mcf_ota mcupm md1img mvpu_algo pi_img preloader_raw scp spmfw sspm tee vbmeta vcp"#redmi-k50
         
@@ -86,6 +86,7 @@ jobs:
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ secrets.upload_dir }}"
+
 
 
 
