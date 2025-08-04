@@ -78,7 +78,7 @@ jobs:
     - name: 打包上传
       run: |
         cd zhlhlf
-        cat payload_properties.txt | tee > firmware-update/by-zhlhlf.txt
+        cat ../payload_properties.txt | tee > firmware-update/by-zhlhlf.txt
         echo "\n\n" >> firmware-update/by-zhlhlf.txt
         sha256sum firmware-update/* | tee >> firmware-update/by-zhlhlf.txt
         du -h firmware-update/*
@@ -89,6 +89,7 @@ jobs:
         mkdir 666
         mv "${{ inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
+
 
 
 
