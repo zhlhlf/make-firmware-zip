@@ -31,7 +31,7 @@ on:
 
       upload_dir:
         description: 'upload_dir'
-        required: true
+        required: false
         default: 'gg'
         
         #"apusys audio_dsp ccu dpm dtbo gpueb gz lk logo mcf_ota mcupm md1img mvpu_algo pi_img preloader_raw scp spmfw sspm tee vbmeta vcp"#redmi-k50
@@ -45,27 +45,27 @@ jobs:
           
     - name: 下载
       run: |
-        aria2c -x10 -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ github.event.inputs.URL }}" -o aaaa.zip
+        aria2c -x10 -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip
         mkdir firmware-update
         
     - name: 解包~提取(payload)
-      if: github.event.inputs.payload == 'true'    
+      if: inputs.payload == 'true'    
       run: |
         unzip -q aaaa.zip payload.bin
         rm -rf aaaa.zip 
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         chmod 777 *
-        echo "images: ${{ github.event.inputs.images }}"
-        ./payload-dump payload.bin firmware-update "${{ github.event.inputs.images }}"
+        echo "images: ${{ inputs.images }}"
+        ./payload-dump payload.bin firmware-update "${{ inputs.images }}"
         
         git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
         rm -rf README.md .git
-        if [ "${{ github.event.inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ github.event.inputs.twrp_URL }}" -o recovery.img -d firmware-update ; fi 
+        if [ "${{ inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ inputs.twrp_URL }}" -o recovery.img -d firmware-update ; fi 
 
     - name: 解包~提取(color)
-      if: github.event.inputs.payload == 'false'
+      if: inputs.payload == 'false'
       run: |
         unzip -v "aaaa.zip"
         unzip "aaaa.zip" firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
@@ -81,12 +81,13 @@ jobs:
         sha256sum firmware-update/* > firmware-update/by-zhlhlf.txt
         du -h firmware-update/*
         echo "$(date +%Y-%m-%d-%H)" >> "firmware-update/by-zhlhlf.txt"
-        echo "${{ github.event.inputs.URL }}" >> "firmware-update/by-zhlhlf.txt"
-        zip -qr "${{ github.event.inputs.zip_name }}" *     
+        echo "${{ inputs.URL }}" >> "firmware-update/by-zhlhlf.txt"
+        zip -qr "${{ inputs.zip_name }}" *     
         rm -rf 666
         mkdir 666
-        mv "${{ github.event.inputs.zip_name }}" 666
-        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ secrets.upload_dir }}"
+        mv "${{ inputs.zip_name }}" 666
+        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
+
 
 
 
