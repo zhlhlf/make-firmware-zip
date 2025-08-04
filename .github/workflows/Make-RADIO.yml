@@ -52,8 +52,6 @@ jobs:
     - name: 解包~提取(payload)
       if: github.event.inputs.payload == 'true'    
       run: |
-        unzip -q aaaa.zip payload.bin
-        rm -rf aaaa.zip 
         pip install git+https://github.com/5ec1cff/payload-dumper
         chmod 777 *
         echo "images: $${{ github.event.inputs.images }}"
@@ -88,5 +86,6 @@ jobs:
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ secrets.upload_dir }}"
+
 
 
