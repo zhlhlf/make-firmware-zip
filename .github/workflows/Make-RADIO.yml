@@ -49,7 +49,7 @@ jobs:
         mkdir firmware-update
         
     - name: 解包~提取(payload)
-      if: inputs.payload == 'true'    
+      if: github.event.inputs.payload == 'true'    
       run: |
         unzip -q aaaa.zip payload.bin
         rm -rf aaaa.zip 
@@ -65,7 +65,7 @@ jobs:
         if [ "${{ inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ inputs.twrp_URL }}" -o recovery.img -d firmware-update ; fi 
 
     - name: 解包~提取(color)
-      if: inputs.payload == 'false'
+      if: github.event.inputs.payload == 'false'    
       run: |
         unzip -v "aaaa.zip"
         unzip "aaaa.zip" firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
@@ -87,6 +87,7 @@ jobs:
         mkdir 666
         mv "${{ inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
+
 
 
 
