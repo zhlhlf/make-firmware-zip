@@ -16,7 +16,7 @@ on:
       zip_name:
         description: 'zip_name'
         required: true
-        default: 'fw-oplus9r-oos1-final.zip'
+        default: 'fw-oplus13r-oos15.zip'
         
       payload:
         description: 'is payload？'
@@ -27,7 +27,12 @@ on:
       images:
         description: 'img'
         required: true
-        default: 'abl aop bluetooth cmnlib cmnlib64 devcfg dsp featenabler hyp imagefv keymaster logo mdm_oem_stanvbk modem multioem multiimgoem qupfw spunvm storsec tz uefisecapp xbl xbl_config xbl_lp5 xbl_config_lp5'
+        default: 'abl aop aop_config bluetooth cpucp cpucp_dtb devcfg dsp engineering_cdt featenabler hyp imagefv keymaster modem oplus_sec oplusstanvbk qupfw recovery shrm splash tz uefi uefisecapp xbl xbl_config xbl_ramdump'
+
+      upload_dir:
+        description: 'gg'
+        required: true
+        default: ''
         
         #"apusys audio_dsp ccu dpm dtbo gpueb gz lk logo mcf_ota mcupm md1img mvpu_algo pi_img preloader_raw scp spmfw sspm tee vbmeta vcp"#redmi-k50
         
@@ -70,7 +75,7 @@ jobs:
         mkdir zhlhlf
         cp -r firmware-update zhlhlf/       
                          
-    - name: 打包上传到wetransfer
+    - name: 打包上传
       run: |
         cd zhlhlf
         sha256sum firmware-update/*
@@ -82,5 +87,6 @@ jobs:
         rm -rf 666
         mkdir 666
         mv "${{ github.event.inputs.zip_name }}" 666
-        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s ${{ secrets.RCK }} 
+        curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ secrets.upload_dir }}"
+
 
