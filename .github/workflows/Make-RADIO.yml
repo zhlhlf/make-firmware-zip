@@ -27,7 +27,7 @@ on:
       images:
         description: 'img'
         required: true
-        default: 'abl aop aop_config bluetooth cpucp cpucp_dtb devcfg dsp engineering_cdt featenabler hyp imagefv keymaster modem oplus_sec oplusstanvbk qupfw recovery shrm splash tz uefi uefisecapp xbl xbl_config xbl_ramdump'
+        default: 'abl aop aop_config bluetooth cpucp cpucp_dtb devcfg engineering_cdt featenabler hyp imagefv keymaster modem oplus_sec oplusstanvbk qupfw recovery shrm splash tz uefi uefisecapp xbl xbl_config xbl_ramdump'
 
       upload_dir:
         description: 'upload_dir'
@@ -89,6 +89,7 @@ jobs:
         mkdir 666
         mv "${{ inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
+
 
 
 
