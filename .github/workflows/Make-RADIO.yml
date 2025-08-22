@@ -56,6 +56,8 @@ jobs:
         rm -rf aaaa.zip 
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         chmod 777 *
+        echo "payload_images: $(./payload-dump payload.bin)"
+        echo
         echo "images: ${{ inputs.images }}"
         ./payload-dump payload.bin firmware-update "${{ inputs.images }}"
         
@@ -79,7 +81,7 @@ jobs:
       run: |
         cd zhlhlf
         cat ../payload_properties.txt | tee firmware-update/by-zhlhlf.txt
-        echo "\n\n" >> firmware-update/by-zhlhlf.txt
+        echo -e "\n\n" >> firmware-update/by-zhlhlf.txt
         sha256sum firmware-update/* | tee -a firmware-update/by-zhlhlf.txt
         du -h firmware-update/*
         echo "$(date +%Y-%m-%d-%H)" -a "firmware-update/by-zhlhlf.txt"
