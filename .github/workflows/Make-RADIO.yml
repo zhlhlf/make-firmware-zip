@@ -17,12 +17,6 @@ on:
         description: 'zip_name'
         required: true
         default: 'fw-oplus13r-oos15.zip'
-        
-      payload:
-        description: 'is payload？'
-        required: true
-        default: 'true'
-        type: boolean
 
       images:
         description: 'img'
@@ -48,7 +42,6 @@ jobs:
         aria2c -x10 -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip
         
     - name: 解包~提取(payload)
-      if: github.event.inputs.payload == 'true'    
       run: |
         mkdir firmware-update
         unzip -q aaaa.zip payload.bin
@@ -67,16 +60,6 @@ jobs:
         rm -rf README.md .git
         if [ "${{ inputs.twrp_URL }}" ];then aria2c -x6 -U "netdisk" "${{ inputs.twrp_URL }}" -o recovery.img -d firmware-update ; fi 
 
-    - name: 解包~提取(color)
-      if: github.event.inputs.payload == 'false'    
-      run: |
-        unzip -v "aaaa.zip"
-        unzip "aaaa.zip" firmware-update/* -d ./ || echo "压缩包根目录没有firmware-update"
-        unzip "aaaa.zip" system_vendor* -d ./ || echo "压缩包根目录没有system_vendor.zip"
-        unzip system_vendor* firmware-update/* -d ./ || echo "666" 
-        mkdir zhlhlf
-        cp -r firmware-update zhlhlf/       
-                         
     - name: 打包上传
       run: |
         cd zhlhlf
