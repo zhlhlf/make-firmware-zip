@@ -48,8 +48,7 @@ jobs:
     - name: 解包~提取(payload)
       run: |
         mkdir firmware-update
-        unzip -q aaaa.zip payload.bin
-        unzip -q aaaa.zip payload_properties.txt
+        7z x aaaa.zip -mmt=on
         rm -rf aaaa.zip 
         wget -q https://github.com/zhlhlf/text/raw/main/payload-dump
         chmod 777 *
