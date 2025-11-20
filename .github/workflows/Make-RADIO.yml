@@ -7,12 +7,12 @@ on:
         description: 'URL'
         required: true
         default: ''
-        
+
       twrp_URL:
         description: 'twrp_URL'
         required: false
         default: ''
-        
+
       zip_name:
         description: 'zip_name'
         required: true
@@ -23,24 +23,28 @@ on:
         required: true
         default: 'abl aop aop_config bluetooth cpucp cpucp_dtb devcfg dsp engineering_cdt featenabler hyp imagefv keymaster modem oplus_sec oplusstanvbk qupfw recovery shrm splash tz uefi uefisecapp xbl xbl_config xbl_ramdump'
 
+      android_flash_scripts_branch:
+        description: 'android_flash_scripts_branch'
+        required: true
+        default: 'main'
+
       upload_dir:
         description: 'upload_dir'
         required: false
         default: 'gg'
-        
         #"apusys audio_dsp ccu dpm dtbo gpueb gz lk logo mcf_ota mcupm md1img mvpu_algo pi_img preloader_raw scp spmfw sspm tee vbmeta vcp"#redmi-k50
-        
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
-          
+
     - name: 下载
       run: |
         aria2c -x10 -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip || wget -U "netdisk" "${{ inputs.URL }}" -o aaaa.zip
-        
+
     - name: 解包~提取(payload)
       run: |
         mkdir firmware-update
@@ -53,8 +57,8 @@ jobs:
         echo
         echo "images: ${{ inputs.images }}"
         ./payload-dump payload.bin firmware-update "${{ inputs.images }}"
-        
-        git clone https://github.com/zhlhlf/android_flash_scripts -b oplus_9r_ab zhlhlf --depth=1
+
+        git clone https://github.com/zhlhlf/android_flash_scripts -b ${{ inputs.android_flash_scripts_branch }} zhlhlf --depth=1
         mv firmware-update zhlhlf/
         cd zhlhlf
         rm -rf README.md .git
@@ -74,14 +78,3 @@ jobs:
         mkdir 666
         mv "${{ inputs.zip_name }}" 666
         curl -sL https://raw.githubusercontent.com/zhlhlf/text/refs/heads/main/upload/upload.sh | bash -s "${{ secrets.RCK }}" "${{ inputs.upload_dir }}"
-
-
-
-
-
-
-
-
-
-
-
